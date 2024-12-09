@@ -86,6 +86,11 @@ npm install
 npm start
 ```
 
+### 5. Test the Application
+You can log in using the following users:
+- admin@gmail.com / testing1234
+- user@gmail.com / testing 1234
+
 ## Verifying Installation
 
 1. Backend API should be running on `http://localhost:8080`
