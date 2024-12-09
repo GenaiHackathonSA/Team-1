@@ -38,7 +38,7 @@ CREATE TABLE `budget` (
 
 LOCK TABLES `budget` WRITE;
 /*!40000 ALTER TABLE `budget` DISABLE KEYS */;
-INSERT INTO `budget` VALUES (1,30000,11,2,2024);
+INSERT INTO `budget` VALUES (1,30000,11,2,2024),(2,3000,12,2,2024);
 /*!40000 ALTER TABLE `budget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `budget_seq` (
 
 LOCK TABLES `budget_seq` WRITE;
 /*!40000 ALTER TABLE `budget_seq` DISABLE KEYS */;
-INSERT INTO `budget_seq` VALUES (51);
+INSERT INTO `budget_seq` VALUES (101);
 /*!40000 ALTER TABLE `budget_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`category_id`),
   KEY `FKnsbgi05kd9jtu7k9ted8x93s1` (`transaction_type_id`),
   CONSTRAINT `FKnsbgi05kd9jtu7k9ted8x93s1` FOREIGN KEY (`transaction_type_id`) REFERENCES `transaction_type` (`transaction_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Groceries',_binary '',1),(2,'EarnExtra webshop',_binary '\0',2),(3,'Gas',_binary '',1),(4,'Pocket money',_binary '',2);
+INSERT INTO `category` VALUES (1,'Groceries',_binary '',1),(2,'Salary',_binary '',2),(3,'Utilities',_binary '',1),(4,'Freelance',_binary '',2),(5,'Investments',_binary '',2),(6,'Gifts',_binary '',2),(7,'Entertainment',_binary '',1),(8,'Transportation',_binary '',1),(9,'Healthcare',_binary '',1);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +142,6 @@ CREATE TABLE `saved_transaction` (
 
 LOCK TABLES `saved_transaction` WRITE;
 /*!40000 ALTER TABLE `saved_transaction` DISABLE KEYS */;
-INSERT INTO `saved_transaction` VALUES (1,1500,1,'cafee','DAILY',1,'2024-11-28',2);
 /*!40000 ALTER TABLE `saved_transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +186,7 @@ CREATE TABLE `transaction` (
   KEY `FKanjpo5tiapru7an6cw4cu37y4` (`user_id`),
   CONSTRAINT `FKanjpo5tiapru7an6cw4cu37y4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `FKgik7ruym8r1n4xngrclc6kiih` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +195,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (4,1500,'2024-11-15','coffee',1,2),(5,12500,'2024-11-14','20l for the week',3,2),(6,7000,'2024-11-14','',4,2),(7,9876,'2024-11-14','',2,2),(8,35432,'2024-11-14','',2,2),(9,4341,'2024-11-14','',1,2),(12,1500,'2024-11-16','cafee',1,2),(13,1500,'2024-11-17','cafee',1,2);
+INSERT INTO `transaction` VALUES (4,150,'2024-10-02','Supermarket shopping',1,2),(5,100,'2024-10-15','Birthday gift',6,2),(6,500,'2024-10-01','Website design',4,2),(7,300,'2024-10-01','Monthly paycheck',2,2),(8,200,'2024-10-10','Stock dividends',5,2),(9,700,'2024-10-20','Consulting project',4,2),(12,100,'2024-10-03','Electricity bill',3,2),(13,150,'2024-10-06','Movie tickets',7,2),(14,120,'2024-12-11','Doctor visit',9,2),(15,130,'2024-10-12','Weekly groceries',1,2),(16,250,'2024-10-22','Organic market',1,2),(17,70,'2024-10-18','Bus pass',8,2),(18,3000,'2024-11-01','Monthly paycheck',2,2),(19,600,'2024-11-05','Graphic design',4,2),(20,200,'2024-11-09','Mutual fund',5,2),(21,160,'2024-11-02','Supermarket shopping',1,2),(22,105,'2024-11-11','Gas bill',8,2),(23,85,'2024-11-06','Theater tickets',7,2),(24,125,'2024-11-09','Eye exam',9,2),(25,65,'2024-11-12','Museum entry',7,2),(26,175,'2024-11-13','Car maintenance',8,2),(27,134,'2024-11-23','Farmers market',1,2),(28,72,'2024-11-27','Bowling night',7,2),(29,3000,'2024-12-01','Monthly paycheck',2,2),(30,550,'2024-12-03','Content writing',4,2),(31,245,'2024-12-25','Savings interest',5,2),(32,170,'2024-12-02','Supermarket shopping',1,2),(33,110,'2024-12-05','Electricity bill',3,2),(34,90,'2024-12-09','Concert tickets',7,2),(35,55,'2024-12-12','Gasoline',8,2),(36,135,'2024-12-14','Doctor visit',9,2),(37,75,'2024-12-14','Restaurant outing',7,2),(38,120,'2024-12-09','Internet bill',3,2);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +246,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (2,1),(4,1),(1,2);
+INSERT INTO `user_roles` VALUES (2,1),(1,2);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +278,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin@gmail.com',_binary '','$2a$10$n43l1P4z0lEu8CRRRkmNuObRs42kb41dFV3o6svGsI3/0l5NKVUIm',NULL,'admin_test','123456','2024-10-30 00:00:00.000000'),(2,'test@test.com',_binary '','$2a$10$CQF5SdCxhcYqy12uBBnexeOT/jyoJo7OOVKKR/GGiKox0kqeLraLS',NULL,'test','61837','2024-11-13 14:57:17.763000'),(4,'user@gmail.com',_binary '','$2a$10$CQF5SdCxhcYqy12uBBnexeOT/jyoJo7OOVKKR/GGiKox0kqeLraLS',NULL,'user_test','123456','2024-10-30 00:00:00.000000');
+INSERT INTO `users` VALUES (1,'admin@gmail.com',_binary '','$2a$10$n43l1P4z0lEu8CRRRkmNuObRs42kb41dFV3o6svGsI3/0l5NKVUIm',NULL,'admin_test','123456','2024-10-30 00:00:00.000000'),(2,'user@gmail.com',_binary '','$2a$10$CQF5SdCxhcYqy12uBBnexeOT/jyoJo7OOVKKR/GGiKox0kqeLraLS',NULL,'user_test','61837','2024-11-13 14:57:17.763000');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -292,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-28 10:04:31
+-- Dump completed on 2024-12-09  7:44:16
