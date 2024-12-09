@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/mywallet/user")
+@RequestMapping("/spendwise/user")
 public class UserController {
 
     @Autowired

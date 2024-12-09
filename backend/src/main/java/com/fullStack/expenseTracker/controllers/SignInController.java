@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/mywallet/auth")
+@RequestMapping("/spendwise/auth")
 public class SignInController {
     @Autowired
     private AuthenticationManager authenticationManager;

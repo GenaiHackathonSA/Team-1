@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/mywallet/category")
+@RequestMapping("/spendwise/category")
 public class CategoryController {
 
     @Autowired

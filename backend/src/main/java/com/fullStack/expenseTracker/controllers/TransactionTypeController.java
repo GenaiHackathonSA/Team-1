@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/mywallet/transactiontype")
+@RequestMapping("/spendwise/transactiontype")
 public class TransactionTypeController {
 
     @Autowired

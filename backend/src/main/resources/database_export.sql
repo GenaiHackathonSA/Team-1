@@ -278,7 +278,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin@gmail.com',_binary '','$2a$10$n43l1P4z0lEu8CRRRkmNuObRs42kb41dFV3o6svGsI3/0l5NKVUIm',NULL,'admin_test','123456','2024-10-30 00:00:00.000000'),(2,'user@gmail.com',_binary '','$2a$10$CQF5SdCxhcYqy12uBBnexeOT/jyoJo7OOVKKR/GGiKox0kqeLraLS',NULL,'user_test','61837','2024-11-13 14:57:17.763000');
+INSERT INTO `users` VALUES (1,'admin@gmail.com',_binary '','testing1234',NULL,'admin_test','123456','2024-10-30 00:00:00.000000'),(2,'user@gmail.com',_binary '','testing1234',NULL,'user_test','61837','2024-11-13 14:57:17.763000');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

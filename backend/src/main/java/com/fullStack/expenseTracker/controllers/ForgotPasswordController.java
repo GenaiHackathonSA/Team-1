@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/mywallet/auth/forgotPassword")
+@RequestMapping("/spendwise/auth/forgotPassword")
 public class ForgotPasswordController {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/mywallet/budget")
+@RequestMapping("/spendwise/budget")
 public class BudgetController {
 
     @Autowired

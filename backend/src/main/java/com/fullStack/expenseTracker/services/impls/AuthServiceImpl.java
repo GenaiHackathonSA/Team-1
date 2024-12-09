@@ -191,7 +191,7 @@ public class AuthServiceImpl implements AuthService {
                         ));
                     }
                 }
-                user.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
+                user.setPassword(resetPasswordDto.getNewPassword());
 
                 userRepository.save(user);
 
@@ -213,10 +213,10 @@ public class AuthServiceImpl implements AuthService {
         return new User(
                 signUpRequestDto.getUserName(),
                 signUpRequestDto.getEmail(),
-                passwordEncoder.encode(signUpRequestDto.getPassword()),
+                signUpRequestDto.getPassword(),
                 generateVerificationCode(),
                 calculateCodeExpirationTime(),
-                false,
+                true,
                 determineRoles(signUpRequestDto.getRoles())
         );
     }

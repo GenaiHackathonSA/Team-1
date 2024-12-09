@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -48,7 +47,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new StringPasswordEncoder();
     }
 
     @Bean
@@ -57,11 +56,11 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/mywallet/auth/**").permitAll()
-                                .requestMatchers("/mywallet/transactiontype/**").permitAll()
-                                .requestMatchers("/mywallet/category/**").permitAll()
-                                .requestMatchers("/mywallet/transaction/**").permitAll()
-                                .requestMatchers("/mywallet/user/**").permitAll()
+                        auth.requestMatchers("/spendwise/auth/**").permitAll()
+                                .requestMatchers("/spendwise/transactiontype/**").permitAll()
+                                .requestMatchers("/spendwise/category/**").permitAll()
+                                .requestMatchers("/spendwise/transaction/**").permitAll()
+                                .requestMatchers("/spendwise/user/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
