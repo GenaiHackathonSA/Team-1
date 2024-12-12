@@ -5,39 +5,41 @@ import AuthService from "../services/auth.service";
 function useExpenseVsIncomeSummary(months) {
     const [data, setData] = useState([]);
     const [isError, setIsError] = useState(false);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const getData = async () => {
-            const income_response = await UserService.getMonthlySummary(AuthService.getCurrentUser().email).then(
-                (response) => {
-                    if (response.data.status === "SUCCESS") {
-                        generateData(response.data.response)
-                    }
-                },
-                (error) => {
-                    setIsError(true)
+            try {
+                const response = await UserService.getMonthlySummary(AuthService.getCurrentUser().email);
+                if (response.data.status === "SUCCESS") {
+                    generateData(response.data.response);
+                } else {
+                    setIsError(true);
                 }
-            )
-            setIsLoading(false)
-        }
+            } catch (error) {
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        getData()
-    }, [months])
+        getData();
+    }, []); // Empty dependency array ensures this runs only once
 
     const generateData = (fetchedData) => {
         const finalData = months.map(({ id, monthName }) => {
-            const monthData = fetchedData.find((t) => t.month === id)
+            const monthData = fetchedData.find((t) => t.month === id);
             return {
-                id, monthName,
+                id,
+                monthName,
                 totalIncome: monthData ? monthData.total_income : 0,
-                totalExpense: monthData ? monthData.total_expense : 0
-            }
-        })
-        setData(finalData)
-    }
+                totalExpense: monthData ? monthData.total_expense : 0,
+            };
+        });
+        setData(finalData);
+    };
 
-    return [data, isLoading, isError]
+    return [data, isLoading, isError];
 }
 
 export default useExpenseVsIncomeSummary;
