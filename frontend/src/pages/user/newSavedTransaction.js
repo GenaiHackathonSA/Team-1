@@ -1,72 +1,75 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UserService from '../../services/userService';
-import TransactionTypeSelectWrapper from '../../components/userTransactions/transactionTypeSelectWrapper';
-import Header from '../../components/utils/header';
-import Loading from '../../components/utils/loading';
-import useCategories from '../../hooks/useCategories';
-import Info from '../../components/utils/Info';
-import Container from '../../components/utils/Container';
-import toast, { Toaster } from 'react-hot-toast';
-import SavedTransactionForm from '../../components/userTransactions/SavedTransactionForm';
+import React, { useState, useEffect } from 'react';
+import { convert_currency } from '../../../currency-converter-api/currency_manager';
 
-const transactionTypes = [{ 'id': 1, 'name': 'Expense' }, { 'id': 2, 'name': 'Income' }]
+const NewSavedTransaction = () => {
+    const [amount, setAmount] = useState('');
+    const [sourceCurrency, setSourceCurrency] = useState('USD'); // Default currency
+    const [targetCurrency, setTargetCurrency] = useState('USD'); // Default currency
+    const [convertedAmount, setConvertedAmount] = useState(null);
+    const [currencyOptions, setCurrencyOptions] = useState([]);
+    const [error, setError] = useState('');
 
-function NewSavedTransaction() {
-    const [categories, isFetching] = useCategories();
-    const [filteredCategories, setFilteredCategories] = useState([]);
-    const [activeTransactionType, setTransactionType] = useState(1);
-    const [isSaving, setIsSaving] = useState(false);
+    // Function to handle currency conversion
+    const handle_currency_conversion = async () => {
+        try {
+            // Validate input amount
+            if (!amount || isNaN(amount) || Number(amount) <= 0) {
+                setError("Please enter a valid amount.");
+                return;
+            }
 
-    const navigate = useNavigate();
+            // Perform currency conversion
+            const response = await convert_currency(sourceCurrency, targetCurrency, parseFloat(amount));
+            if (response.error) {
+                setError(response.error);
+            } else {
+                setConvertedAmount(response.converted_amount);
+                setError(''); // Clear any previous errors
+            }
+        } catch (e) {
+            console.error("An error occurred during currency conversion:", e);
+            setError("An unexpected error occurred. Please try again.");
+        }
+    };
+
+    // Function to load available currencies (implement based on your needs)
+    const loadAvailableCurrencies = async () => {
+        // Example fetch function, replace with actual service call if needed
+        const currencies = await fetch('/api/currencies'); // Placeholder API call
+        const data = await currencies.json();
+        setCurrencyOptions(data);
+    };
 
     useEffect(() => {
-        setFilteredCategories(categories.filter(cat => cat.transactionType.transactionTypeId === activeTransactionType));
-    }, [categories, activeTransactionType])
-
-    const onSubmit = async (data) => {
-        setIsSaving(true)
-        await UserService.createSavedTransaction(
-            data.category, data.amount, data.description, data.frequency, data.date, 
-        ).then(
-            (response) => {
-                if (response.data.status === "SUCCESS") {
-                    navigate("/user/savedTransactions", { state: { text: response.data.response } })
-                }
-            },
-            (error) => {
-                error.response ?
-                    toast.error(error.response.data.response)
-                    :
-                    toast.error("Failed to add transaction: Try again later!" )
-            }
-        );
-        setIsSaving(false);
-    }
-
-
+        loadAvailableCurrencies();
+    }, []);
+    
     return (
-        <Container activeNavId={11}>
-            <Header title="New Transaction" />
-            <Toaster/>
-            {(isFetching) && <Loading />}
-            {(!isFetching && categories.length === 0) && <Info text="No data found!" />}
-            {
-                (!isFetching && categories.length !== 0) && (
-                    <>
-                        <TransactionTypeSelectWrapper
-                            transactionTypes={transactionTypes}
-                            setTransactionType={setTransactionType}
-                            activeTransactionType={activeTransactionType}
-                        />
-                        <SavedTransactionForm categories={filteredCategories} onSubmit={onSubmit} isSaving={isSaving} />
-                    </>
-                )
-            }
-        </Container>
-    )
-}
+        <div>
+            <h1>Create New Saved Transaction</h1>
+            <div>
+                <input 
+                    type="text" 
+                    value={amount} 
+                    onChange={(e) => setAmount(e.target.value)} 
+                    placeholder="Amount" 
+                />
+                <select onChange={(e) => setSourceCurrency(e.target.value)} value={sourceCurrency}>
+                    {currencyOptions.map(currency => (
+                        <option key={currency} value={currency}>{currency}</option>
+                    ))}
+                </select>
+                <select onChange={(e) => setTargetCurrency(e.target.value)} value={targetCurrency}>
+                    {currencyOptions.map(currency => (
+                        <option key={currency} value={currency}>{currency}</option>
+                    ))}
+                </select>
+                <button onClick={handle_currency_conversion}>Convert Currency</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {convertedAmount !== null && <p>Converted Amount: {convertedAmount}</p>}
+            </div>
+        </div>
+    );
+};
 
 export default NewSavedTransaction;
-
-
