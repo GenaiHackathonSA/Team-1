@@ -65,5 +65,19 @@ public class CategoryServiceImpl implements CategoryService {
             throw new CategoryServiceLogicException("Failed to update category: Try again later!");
         }
     }
+    @Override
+    public ResponseEntity<ApiResponseDto<?>> addCategory(Category category) throws CategoryServiceLogicException {
+        try {
+            categoryRepository.save(category);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponseDto<>(
+                            ApiResponseStatus.SUCCESS, HttpStatus.OK, "Category has been added successfully!"
+                    )
+            );
+        } catch (Exception e) {
+            log.error("Failed to add category: " + e.getMessage());
+            throw new CategoryServiceLogicException("Failed to add category: Try again later!");
+        }
+    }
 
 }

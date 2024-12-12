@@ -15,6 +15,18 @@ const getAllTransactions = (pagenumber, pageSize, searchKey) => {
         }
     )
 }
+const addCategory = (categoryName, transactionTypeId) => {
+    return axios.post(
+        API_BASE_URL + '/category/add',
+        {
+            categoryName: categoryName,
+            transactionTypeId: transactionTypeId
+        },
+        {
+            headers: AuthService.authHeader()
+        }
+    );
+};
 
 const getAllUsers = (pagenumber, pageSize, searchKey) => {
     return axios.get(
@@ -86,6 +98,7 @@ const AdminService = {
     getAllcategories,
     updatecategory,
     disableOrEnableCategory,
+    addCategory
 }
 
 export default AdminService;
