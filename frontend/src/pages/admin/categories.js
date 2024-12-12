@@ -9,6 +9,8 @@ import Container from "../../components/utils/Container";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast/headless";
 
+const transactionTypes = [{ id: 1, name: 'Expense' }, { id: 2, name: 'Income' }];
+
 function AdminCategoriesManagement() {
     const [data, isFetching] = useCategories([]);
     const [newCategory, setNewCategory] = useState({ categoryName: '', transactionTypeId: '' });
@@ -59,13 +61,16 @@ function AdminCategoriesManagement() {
                             onChange={(e) => setNewCategory({ ...newCategory, categoryName: e.target.value })}
                             required
                         />
-                        <input
-                            type="text"
-                            placeholder="Transaction Type ID"
+                        <select
                             value={newCategory.transactionTypeId}
                             onChange={(e) => setNewCategory({ ...newCategory, transactionTypeId: e.target.value })}
                             required
-                        />
+                        >
+                            <option value="" disabled>Select Transaction Type</option>
+                            {transactionTypes.map(type => (
+                                <option key={type.id} value={type.id}>{type.name}</option>
+                            ))}
+                        </select>
                         <button type="submit">Add Category</button>
                     </form>
                     <table>
@@ -91,7 +96,6 @@ function CategoriesTableHeader() {
         </tr>
     );
 }
-
 
 function CategoriesTableBody({ data, disableOrEnable }) {
     return (

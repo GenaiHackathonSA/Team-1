@@ -1,5 +1,7 @@
 package com.fullStack.expenseTracker.services.impls;
 
+import com.fullStack.expenseTracker.enums.ETransactionType;
+import com.fullStack.expenseTracker.models.TransactionType;
 import com.fullStack.expenseTracker.services.CategoryService;
 import com.fullStack.expenseTracker.services.TransactionTypeService;
 import com.fullStack.expenseTracker.dto.reponses.ApiResponseDto;
@@ -68,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> addCategory(Category category) throws CategoryServiceLogicException {
         try {
+            category.setTransactionType(new TransactionType(1, ETransactionType.TYPE_INCOME));
             categoryRepository.save(category);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponseDto<>(
@@ -78,6 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Failed to add category: " + e.getMessage());
             throw new CategoryServiceLogicException("Failed to add category: Try again later!");
         }
+
     }
 
 }
